@@ -4,10 +4,11 @@ include in ideabox:
  3.add a box to write idea 
  4.add a botton to save idea, name-submit
  5.add botton to clear the writing idea 
- 6.display the previous ideas in under the submit and clear button(without scroll name and idea box scroll)
+ 6.display the previous ideas in under the submit and clear button(dont scroll name and idea box in scroll down)
  7.add a glow to submit and clear when cuser on the button
+ 8.add 3d shadow 
 
 include the background:
- 1. add dynamic changing background with matching color with  ideabox
+ 1. add dynamic changing background with matching color(black+white+grey) with  ideabox
  2. add footer named by university of colombo school of computing
  3. add a header name-Testing 1
