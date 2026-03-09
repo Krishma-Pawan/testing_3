@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Box - Testing 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(-45deg, #0066ff, #0099ff, #00ccff, #0066ff);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Header */
+        .top-header {
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .top-header h1 {
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Container */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Idea Box Card */
+        .idea-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 102, 255, 0.3);
+        }
+
+        /* Box Title */
+        .box-title {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 102, 255, 0.5);
+            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.3));
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #0066ff;
+            font-weight: 600;
+            font-size: 1.05em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Name Selection */
+        .name-selection {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #0066ff;
+            border-radius: 10px;
+            font-size: 1em;
+            background: #f8f9ff;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .name-selection:hover {
+            background: #e8f0ff;
+            box-shadow: 0 0 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .name-selection:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+            border-color: #00ccff;
+        }
+
+        /* Idea Text Area */
+        .idea-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #0066ff;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            background: #f8f9ff;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .idea-textarea:hover {
+            background: #e8f0ff;
+            box-shadow: 0 0 15px rgba(0, 102, 255, 0.3);
+        }
+
+        .idea-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+            border-color: #00ccff;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .btn {
+            flex: 1;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+        }
+
+        .submit-btn:hover {
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.8), 0 0 60px rgba(0, 102, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Clear Button */
+        .clear-btn {
+            background: linear-gradient(135deg, #ff6666, #ff9999);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 102, 102, 0.5);
+        }
+
+        .clear-btn:hover {
+            box-shadow: 0 0 40px rgba(255, 102, 102, 0.8), 0 0 60px rgba(255, 102, 102, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .clear-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Ideas Display Section */
+        .ideas-section {
+            border-top: 2px solid #e0e0e0;
+            padding-top: 30px;
+        }
+
+        .ideas-title {
+            font-size: 1.3em;
+            color: #0066ff;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ideas-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .idea-item {
+            background: linear-gradient(135deg, #f0f8ff, #e8f4ff);
+            border-left: 5px solid #0066ff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 102, 255, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .idea-name {
+            font-weight: 600;
+            color: #0066ff;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .idea-text {
+            color: #333;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .idea-timestamp {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .delete-idea-btn {
+            background: #ff6666;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-idea-btn:hover {
+            background: #ff3333;
+            box-shadow: 0 0 15px rgba(255, 102, 102, 0.5);
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 30px 20px;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: auto;
+        }
+
+        footer p {
+            font-size: 1em;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+            }
+
+            .box-title {
+                font-size: 1.8em;
+            }
+
+            .top-header h1 {
+                font-size: 1.8em;
+            }
+
+            .idea-box {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <div class="top-header">
+        <h1>Testing 1</h1>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="idea-box">
+            <!-- Title -->
+            <h2 class="box-title">💡 Idea Box</h2>
+
+            <!-- Name Selection -->
+            <div class="form-group">
+                <label for="name-select">Select Your Name</label>
+                <select class="name-selection" id="name-select">
+                    <option value="">-- Choose Name --</option>
+                    <option value="Pawan">Pawan</option>
+                    <option value="Imesh">Imesh</option>
+                    <option value="Rashmika">Rashmika</option>
+                    <option value="Sotti">Sotti</option>
+                </select>
+            </div>
+
+            <!-- Idea Text Area -->
+            <div class="form-group">
+                <label for="idea-text">Write Your Idea</label>
+                <textarea class="idea-textarea" id="idea-text" placeholder="Share your creative idea here..."></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-container">
+                <button class="btn submit-btn" id="submit-btn">Submit</button>
+                <button class="btn clear-btn" id="clear-btn">Clear</button>
+            </div>
+
+            <!-- Ideas Display Section -->
+            <div class="ideas-section">
+                <h3 class="ideas-title">📌 Previous Ideas</h3>
+                <div class="ideas-list" id="ideas-list">
+                    <div class="empty-message">No ideas yet. Start sharing your thoughts!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; University of Colombo School of Computing</p>
+    </footer>
+
+    <script>
+        // Get elements
+        const nameSelect = document.getElementById('name-select');
+        const ideaText = document.getElementById('idea-text');
+        const submitBtn = document.getElementById('submit-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const ideasList = document.getElementById('ideas-list');
+
+        // Load ideas from localStorage
+        let ideas = JSON.parse(localStorage.getItem('ideas')) || [];
+
+        // Display ideas on page load
+        displayIdeas();
+
+        // Submit button click
+        submitBtn.addEventListener('click', () => {
+            const name = nameSelect.value;
+            const text = ideaText.value.trim();
+
+            if (!name) {
+                alert('Please select your name!');
+                return;
+            }
+
+            if (!text) {
+                alert('Please write an idea!');
+                return;
+            }
+
+            // Create idea object
+            const idea = {
+                id: Date.now(),
+                name: name,
+                text: text,
+                timestamp: new Date().toLocaleString()
+            };
+
+            // Add to ideas array
+            ideas.push(idea);
+
+            // Save to localStorage
+            localStorage.setItem('ideas', JSON.stringify(ideas));
+
+            // Clear form
+            nameSelect.value = '';
+            ideaText.value = '';
+
+            // Display updated ideas
+            displayIdeas();
+
+            // Show success message
+            submitBtn.textContent = '✓ Submitted!';
+            setTimeout(() => {
+                submitBtn.textContent = 'Submit';
+            }, 1500);
+        });
+
+        // Clear button click
+        clearBtn.addEventListener('click', () => {
+            ideaText.value = '';
+            nameSelect.value = '';
+            ideaText.focus();
+        });
+
+        // Display all ideas
+        function displayIdeas() {
+            if (ideas.length === 0) {
+                ideasList.innerHTML = '<div class="empty-message">No ideas yet. Start sharing your thoughts!</div>';
+                return;
+            }
+
+            ideasList.innerHTML = '';
+            ideas.forEach((idea, index) => {
+                const ideaItem = document.createElement('div');
+                ideaItem.className = 'idea-item';
+                ideaItem.innerHTML = `
+                    <div class="idea-name">👤 ${idea.name}</div>
+                    <div class="idea-text">${escapeHtml(idea.text)}</div>
+                    <div class="idea-timestamp">📅 ${idea.timestamp}</div>
+                    <button class="delete-idea-btn" onclick="deleteIdea(${idea.id})">Delete</button>
+                `;
+                ideasList.appendChild(ideaItem);
+            });
+        }
+
+        // Delete idea
+        function deleteIdea(id) {
+            if (confirm('Are you sure you want to delete this idea?')) {
+                ideas = ideas.filter(idea => idea.id !== id);
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+                displayIdeas();
+            }
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Add keyboard support
+        ideaText.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
