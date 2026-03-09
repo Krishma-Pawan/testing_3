@@ -7,6 +7,7 @@ include in ideabox:
  6.display the previous ideas in under the submit and clear button(dont scroll name and idea box in scroll down)
  7.add a glow to submit and clear when cuser on the button
  8.add 3d shadow 
+ 9.add like and dislike bottons for previous ideas
 
 include the background:
  1. add dynamic changing background with matching color(black+white+grey) with  ideabox

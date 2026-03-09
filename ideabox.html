@@ -317,6 +317,33 @@
             margin-top: 8px;
         }
 
+        .idea-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .like-btn, .dislike-btn {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dislike-btn {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+        }
+
+        .like-btn:hover, .dislike-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
         .delete-idea-btn {
             background: #ff6666;
             color: white;
@@ -355,25 +382,6 @@
             font-size: 1em;
             letter-spacing: 0.5px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .button-container {
-                flex-direction: column;
-            }
-
-            .box-title {
-                font-size: 1.8em;
-            }
-
-            .top-header h1 {
-                font-size: 1.8em;
-            }
-
-            .idea-box {
-                padding: 25px;
-            }
         }
     </style>
 </head>
@@ -462,7 +470,9 @@
                 id: Date.now(),
                 name: name,
                 text: text,
-                timestamp: new Date().toLocaleString()
+                timestamp: new Date().toLocaleString(),
+                likes: 0,
+                dislikes: 0
             };
 
             // Add to ideas array
@@ -507,7 +517,11 @@
                     <div class="idea-name">👤 ${idea.name}</div>
                     <div class="idea-text">${escapeHtml(idea.text)}</div>
                     <div class="idea-timestamp">📅 ${idea.timestamp}</div>
-                    <button class="delete-idea-btn" onclick="deleteIdea(${idea.id})">Delete</button>
+                    <div class="idea-actions">
+                        <button class="like-btn" onclick="likeIdea(${idea.id})">👍 ${idea.likes}</button>
+                        <button class="dislike-btn" onclick="dislikeIdea(${idea.id})">👎 ${idea.dislikes}</button>
+                        <button class="delete-idea-btn" onclick="deleteIdea(${idea.id})">Delete</button>
+                    </div>
                 `;
                 ideasList.appendChild(ideaItem);
             });
@@ -517,6 +531,26 @@
         function deleteIdea(id) {
             if (confirm('Are you sure you want to delete this idea?')) {
                 ideas = ideas.filter(idea => idea.id !== id);
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+                displayIdeas();
+            }
+        }
+
+        // Like idea
+        function likeIdea(id) {
+            const idea = ideas.find(i => i.id === id);
+            if (idea) {
+                idea.likes++;
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+                displayIdeas();
+            }
+        }
+
+        // Dislike idea
+        function dislikeIdea(id) {
+            const idea = ideas.find(i => i.id === id);
+            if (idea) {
+                idea.dislikes++;
                 localStorage.setItem('ideas', JSON.stringify(ideas));
                 displayIdeas();
             }
